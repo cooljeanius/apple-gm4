@@ -173,6 +173,7 @@ Preprocessor features:\n\
       fputs ("\
 \n\
 Limits control:\n\
+  -g, --gnu                    override -G to re-enable GNU extensions\n\
   -G, --traditional            suppress all GNU extensions\n\
   -H, --hashsize=PRIME         set symbol lookup hash table size [509]\n\
   -L, --nesting-limit=NUMBER   change artificial nesting limit [1024]\n\
@@ -236,6 +237,7 @@ static const struct option long_options[] =
   {"error-output", required_argument, NULL, 'o'},
   {"fatal-warnings", no_argument, NULL, 'E'},
   {"freeze-state", required_argument, NULL, 'F'},
+  {"gnu", no_argument, NULL, 'g'},
   {"hashsize", required_argument, NULL, 'H'},
   {"include", required_argument, NULL, 'I'},
   {"interactive", no_argument, NULL, 'e'},
@@ -264,9 +266,9 @@ static const struct option long_options[] =
 int retcode;
 
 #ifdef ENABLE_CHANGEWORD
-#define OPTSTRING "B:D:EF:GH:I:L:N:PQR:S:T:U:W:d::el:o:st:"
+#define OPTSTRING "B:D:EF:GH:I:L:N:PQR:S:T:U:W:d::egl:o:st:"
 #else
-#define OPTSTRING "B:D:EF:GH:I:L:N:PQR:S:T:U:d::el:o:st:"
+#define OPTSTRING "B:D:EF:GH:I:L:N:PQR:S:T:U:d::egl:o:st:"
 #endif
 
 int
@@ -385,6 +387,10 @@ main (int argc, char *const *argv, char *const *envp)
       case 'e':
 	interactive = 1;
 	break;
+
+      case 'g':
+        no_gnu_extensions = 0;
+        break;
 
       case 'l':
 	max_debug_argument_length = atoi (optarg);
